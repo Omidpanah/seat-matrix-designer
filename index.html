@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طراحی چیدمان صندلی‌های سالن</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>طراحی چیدمان صندلی‌های سالن</h1>
+        </div>
+
+        <div class="main-content">
+            <div class="canvas-section">
+                <div class="stage">صحنه</div>
+                
+                <div class="canvas-container">
+                    <canvas id="chessboard" width="500" height="500"></canvas>
+                </div>
+                
+                <div class="legend" id="legend">
+                    <div class="legend-item">
+                        <div class="legend-color empty"></div>
+                        <span>خالی</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="panel">
+                    <div class="panel-title">تنظیمات</div>
+                    
+                    <div class="settings-grid">
+                        <div class="input-group">
+                            <label for="rows">تعداد ردیف</label>
+                            <input type="number" id="rows" value="25" min="5" max="100">
+                        </div>
+                        <div class="input-group">
+                            <label for="cols">تعداد ستون</label>
+                            <input type="number" id="cols" value="40" min="5" max="100">
+                        </div>
+                    </div>
+                    
+                    <div class="grid-size-control">
+                        <label for="gridSize">اندازه خانه‌ها</label>
+                        <input type="range" id="gridSize" min="15" max="40" value="25" oninput="updateGridSize()">
+                        <div class="grid-size-value" id="gridSizeValue">25 پیکسل</div>
+                    </div>
+                    
+                    <div id="qualityInfo" class="quality-info" style="display: none;">
+                        برای ماتریس‌های بزرگ، اندازه کوچک‌تر انتخاب کنید
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="updateGrid()">اعمال تغییرات</button>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-title">تعریف نوع صندلی</div>
+                    
+                    <div class="add-type-form">
+                        <div class="input-group">
+                            <label for="typeName">نام نوع</label>
+                            <input type="text" id="typeName" placeholder="مثل: VIP، Premium">
+                        </div>
+                        <div class="input-group">
+                            <label for="typeColor">رنگ</label>
+                            <input type="color" id="typeColor" class="color-input" value="#3b82f6">
+                        </div>
+                        <button class="add-type-btn" onclick="addSeatType()">افزودن</button>
+                    </div>
+                    
+                    <div class="type-buttons" id="typeButtons">
+                        <button class="type-btn active" data-type="standard" style="background: #3b82f6;">
+                            <span>Standard</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-title">آمار</div>
+                    
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-value" id="selectedCount">0</div>
+                            <div class="stat-label">صندلی</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="rowCount">0</div>
+                            <div class="stat-label">ردیف</div>
+                        </div>
+                    </div>
+
+                    <div class="instructions">
+                        <h3>راهنما</h3>
+                        <ul>
+                            <li>کلیک برای افزودن صندلی</li>
+                            <li>کلیک و کشیدن برای انتخاب چندتا</li>
+                            <li>Shift + کشیدن برای حذف</li>
+                            <li>نوع صندلی را انتخاب کنید</li>
+                            <li>از اسلایدر برای تغییر اندازه استفاده کنید</li>
+                            <li>برای ماتریس‌های بزرگ از اسکرول استفاده کنید</li>
+                            <li>فایل JSON را آپلود کنید برای بارگذاری</li>
+                        </ul>
+                    </div>
+
+                    <div class="buttons">
+                        <button class="btn btn-secondary" onclick="clearAll()">پاک کردن همه</button>
+                        <label for="uploadFile" class="btn btn-secondary" style="cursor: pointer; display: inline-block; text-align: center; margin-bottom: 8px;">
+                            آپلود ماتریس
+                        </label>
+                        <input type="file" id="uploadFile" accept=".json" style="display: none;" onchange="uploadMatrix(event)">
+                        <button class="btn btn-primary" onclick="exportMatrix()">دانلود</button>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-title">کد ماتریس</div>
+                    <div class="output-container">
+                        <button class="copy-btn" onclick="copyToClipboard()">کپی</button>
+                        <div id="output" class="output"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
